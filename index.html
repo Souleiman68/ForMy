@@ -16,7 +16,7 @@
     --cream:#f6f1e8;
   }
 
-  *{ box-sizing:border-box; }
+  *{ box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
 
   html,body{
     margin:0; padding:0; width:100%; height:100%;
@@ -24,9 +24,16 @@
     font-family:'Cormorant Garamond', serif;
     color:var(--cream);
     overflow:hidden;
+    -webkit-text-size-adjust: 100%;
+    touch-action: manipulation;
   }
 
-  #app{ position:relative; width:100%; height:100vh; }
+  #app{
+    position:relative; width:100%;
+    height:100vh; height:-webkit-fill-available; height:100dvh;
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
 
   .screen{
     position:absolute; inset:0;
@@ -106,6 +113,14 @@
     filter: drop-shadow(0 0 12px rgba(243,201,105,.85)) drop-shadow(0 0 24px rgba(255,143,172,.35));
     transition: transform .4s ease, filter .4s ease;
     animation: starPulse 2.6s ease-in-out infinite;
+    /* larger invisible tap target for mobile */
+    display:flex; align-items:center; justify-content:center;
+  }
+  .star::before{
+    content:'';
+    position:absolute;
+    width:56px; height:56px;
+    top:50%; left:50%; transform:translate(-50%,-50%);
   }
   @keyframes starPulse{
     0%,100%{ filter: drop-shadow(0 0 10px rgba(243,201,105,.75)) drop-shadow(0 0 20px rgba(255,143,172,.3)); }
@@ -113,7 +128,7 @@
   }
   .star:hover{ transform:scale(1.4); }
   .star.done{ opacity:.4; animation:none; filter: drop-shadow(0 0 4px rgba(243,201,105,.35)); }
-  .star svg{ width:100%; height:100%; }
+  .star svg{ width:100%; height:100%; pointer-events:none; }
 
   .reveal-card{
     position:absolute;
@@ -134,20 +149,30 @@
   }
   @keyframes pop{ from{ transform:translateX(-50%) scale(.85); opacity:0;} to{ transform:translateX(-50%) scale(1); opacity:1; } }
 
-  .final-btn{
-    position:absolute; bottom:46px; left:50%; transform:translateX(-50%);
-    background:var(--gold); color:var(--night-deep);
-    border:none; padding:13px 36px; border-radius:30px;
-    font-family:'Cormorant Garamond',serif; font-size:18px; letter-spacing:1px;
-    cursor:pointer; opacity:0; pointer-events:none; transition:.5s;
-    z-index:5;
+  /* ---------- FINAL OVERLAY BUTTON (appears in front of the stars) ---------- */
+  .final-overlay{
+    position:fixed; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    background:rgba(6,5,20,.55);
+    z-index:50;
+    opacity:0; pointer-events:none;
+    transition:opacity .6s ease;
   }
-  .final-btn.show{ opacity:1; pointer-events:auto; }
+  .final-overlay.show{ opacity:1; pointer-events:auto; }
+  .final-btn{
+    background:var(--gold); color:var(--night-deep);
+    border:none; padding:16px 42px; border-radius:32px;
+    font-family:'Cormorant Garamond',serif; font-size:20px; letter-spacing:1px;
+    cursor:pointer;
+    box-shadow:0 0 30px rgba(243,201,105,.6);
+    animation: pop .5s ease;
+  }
 
   /* ---------- FINAL MESSAGE ---------- */
   #finalScreen{
     padding:60px 40px; text-align:center;
     overflow-y:auto;
+    -webkit-overflow-scrolling: touch;
   }
   .final-name{
     font-family:'Great Vibes', cursive; font-size:48px; color:var(--gold); margin-bottom:20px;
@@ -161,6 +186,20 @@
   .final-sign{
     margin-top:30px; font-family:'Great Vibes', cursive; font-size:34px; color:var(--rose);
   }
+  .restart-btn{
+    margin-top:36px;
+    margin-bottom: env(safe-area-inset-bottom);
+    background:transparent;
+    border:1px solid var(--gold);
+    color:var(--gold);
+    padding:12px 30px;
+    border-radius:30px;
+    font-family:'Cormorant Garamond', serif;
+    font-size:16px; letter-spacing:1px;
+    cursor:pointer;
+    transition:.3s;
+  }
+  .restart-btn:active{ background:var(--gold); color:var(--night-deep); }
 
   .heart{
     position:absolute; bottom:-30px;
@@ -171,16 +210,6 @@
   @keyframes floatUp{
     0%{ transform:translateY(0) rotate(0deg); opacity:.9; }
     100%{ transform:translateY(-110vh) rotate(25deg); opacity:0; }
-  }
-
-  html, body{
-    -webkit-text-size-adjust: 100%;
-    touch-action: manipulation;
-  }
-
-  #app{
-    padding-top: env(safe-area-inset-top);
-    padding-bottom: env(safe-area-inset-bottom);
   }
 
   @media (max-width:480px){
@@ -196,7 +225,7 @@
     .final-text{ font-size:18px; line-height:1.65; }
     #finalScreen{ padding:40px 22px; }
     .final-sign{ font-size:28px; }
-    .final-btn{ bottom:calc(env(safe-area-inset-bottom) + 30px); padding:14px 32px; font-size:17px; }
+    .final-btn{ padding:14px 34px; font-size:18px; }
   }
 </style>
 </head>
@@ -223,8 +252,12 @@
       <div class="instructions">Touche chaque étoile</div>
       <div class="progress" id="progressText">0 / 10</div>
       <!-- stars injected by JS -->
-      <button class="final-btn" id="toFinalBtn" onclick="showFinal()">Lire la suite ✦</button>
     </div>
+  </div>
+
+  <!-- FINAL OVERLAY BUTTON (shows once all stars are touched) -->
+  <div class="final-overlay" id="finalOverlay">
+    <button class="final-btn" id="toFinalBtn" onclick="showFinal()">Lire la suite ✦</button>
   </div>
 
   <!-- FINAL SCREEN -->
@@ -232,6 +265,7 @@
     <div class="final-name">Mamy</div>
     <div class="final-text" id="finalText"></div>
     <div class="final-sign">Je t'aime. - ton babe</div>
+    <button class="restart-btn" onclick="resetLoop()">Recommencer ✦</button>
   </div>
 
 </div>
@@ -248,7 +282,7 @@ for(let i=0;i<70;i++){
   app.appendChild(s);
 }
 
-/* ---------------- code lock (30/10) ---------------- */
+/* ---------------- code lock (31/10) ---------------- */
 const boxes = document.querySelectorAll('.code-box');
 boxes.forEach((b,idx)=>{
   b.addEventListener('input', ()=>{
@@ -301,6 +335,7 @@ const positions = [
 ];
 
 let clicked = 0;
+let heartInterval = null;
 
 function starSVG(){
   return `<svg viewBox="0 0 24 24"><path fill="#f3c969" d="M12 0 l2.6 8.2 8.4.1-6.8 5 2.6 8.2L12 16.9 5.2 21.5l2.6-8.2-6.8-5 8.4-.1z"/></svg>`;
@@ -308,6 +343,9 @@ function starSVG(){
 
 function buildStars(){
   const wrap = document.getElementById('skyWrap');
+  // remove any leftover stars from a previous loop
+  wrap.querySelectorAll('.star').forEach(el=>el.remove());
+
   reasons.forEach((text, i)=>{
     const star = document.createElement('div');
     star.className = 'star';
@@ -326,8 +364,8 @@ function revealStar(star, text, i){
   if(firstTime){
     clicked++;
     document.getElementById('progressText').textContent = clicked + ' / ' + reasons.length;
-    if(clicked >= reasons.length - 2){
-      document.getElementById('toFinalBtn').classList.add('show');
+    if(clicked >= reasons.length){
+      document.getElementById('finalOverlay').classList.add('show');
     }
   }
 
@@ -369,6 +407,7 @@ const finalParagraphs = [
 ];
 
 function showFinal(){
+  document.getElementById('finalOverlay').classList.remove('show');
   const container = document.getElementById('finalText');
   container.innerHTML = finalParagraphs.map(p=>`<p>${p}</p>`).join('');
   goTo('finalScreen');
@@ -377,7 +416,8 @@ function showFinal(){
 
 function spawnHearts(){
   const symbols = ['❤','💕','✦'];
-  const interval = setInterval(()=>{
+  if(heartInterval) clearInterval(heartInterval);
+  heartInterval = setInterval(()=>{
     const h = document.createElement('div');
     h.className='heart';
     h.textContent = symbols[Math.floor(Math.random()*symbols.length)];
@@ -387,7 +427,23 @@ function spawnHearts(){
     document.getElementById('finalScreen').appendChild(h);
     setTimeout(()=>h.remove(), 10000);
   }, 400);
-  setTimeout(()=>clearInterval(interval), 14000);
+  setTimeout(()=>{ clearInterval(heartInterval); heartInterval=null; }, 14000);
+}
+
+/* ---------------- loop back to the stars ---------------- */
+function resetLoop(){
+  if(heartInterval){ clearInterval(heartInterval); heartInterval=null; }
+  document.querySelectorAll('#finalScreen .heart').forEach(h=>h.remove());
+
+  clicked = 0;
+  document.getElementById('progressText').textContent = '0 / ' + reasons.length;
+  document.getElementById('finalOverlay').classList.remove('show');
+
+  const oldCard = document.querySelector('.reveal-card');
+  if(oldCard) oldCard.remove();
+
+  goTo('skyScreen');
+  buildStars();
 }
 </script>
 </body>
