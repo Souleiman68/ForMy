@@ -117,8 +117,10 @@
 
   .reveal-card{
     position:absolute;
-    max-width:320px;
-    background:linear-gradient(160deg, rgba(28,20,70,.95), rgba(40,20,70,.92));
+    left:50%; bottom:120px;
+    transform:translateX(-50%);
+    width:min(86vw, 460px);
+    background:linear-gradient(160deg, rgba(28,20,70,.97), rgba(40,20,70,.95));
     border:1px solid rgba(243,201,105,.55);
     border-radius:16px;
     padding:18px 22px;
@@ -127,10 +129,10 @@
     font-style:italic;
     color:var(--cream);
     box-shadow:0 10px 34px rgba(0,0,0,.55), 0 0 22px rgba(255,143,172,.15);
-    z-index:20;
+    z-index:30;
     animation: pop .45s ease;
   }
-  @keyframes pop{ from{ transform:scale(.85); opacity:0;} to{ transform:scale(1); opacity:1; } }
+  @keyframes pop{ from{ transform:translateX(-50%) scale(.85); opacity:0;} to{ transform:translateX(-50%) scale(1); opacity:1; } }
 
   .final-btn{
     position:absolute; bottom:46px; left:50%; transform:translateX(-50%);
@@ -287,8 +289,8 @@ const reasons = [
   "Ta façon de croire en moi et de me soutenir, même quand moi j'en doute - babe, je ne l'oublierai jamais.",
   "La joie de vivre que tu m'as redonnée, toi qui m'as sorti de ma solitude. Tu m'as appris que life is good, et je le vis maintenant avec toi.",
   "Ton âme, la plus belle chose que Dieu ait mise sur mon chemin.",
-  "With you by my side, I want to build a real life - a home, a future, everything good, together.",
-  "One day I'll call you my wife, but honestly babe, every day with you already feels like forever."
+  "Every time I look at you, babe, I fall in love all over again - and I don't think that will ever stop.",
+  "I promise you this, Mamy: whatever life brings, I'll always choose you, again and again."
 ];
 
 // positions roughly forming a heart shape across the viewport (in %)
@@ -336,11 +338,6 @@ function revealStar(star, text, i){
   const card = document.createElement('div');
   card.className = 'reveal-card';
   card.textContent = text;
-
-  let left = positions[i].x;
-  let top = positions[i].y;
-  card.style.left = (left>55 ? (left-32) : left) + '%';
-  card.style.top = (top>60 ? (top-22) : top+4) + '%';
 
   card.addEventListener('click', (e)=>{ e.stopPropagation(); card.remove(); });
   document.getElementById('skyWrap').appendChild(card);
