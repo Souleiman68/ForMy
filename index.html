@@ -229,7 +229,7 @@
   <div class="screen" id="finalScreen">
     <div class="final-name">Mamy</div>
     <div class="final-text" id="finalText"></div>
-    <div class="final-sign">Je t'aime. — ton babe</div>
+    <div class="final-sign">Je t'aime. - ton babe</div>
   </div>
 
 </div>
@@ -279,16 +279,16 @@ function goTo(id){
 
 /* ---------------- constellation ---------------- */
 const reasons = [
-  "Tes yeux babe, ton sourire — c'est le seul endroit où j'aime toujours me perdre. Te regarder, être à tes côtés, il n'y a rien de mieux, depuis le début je te le jure.",
+  "Tes yeux babe, ton sourire - c'est le seul endroit où j'aime toujours me perdre. Te regarder, être à tes côtés, il n'y a rien de mieux, depuis le début je te le jure.",
   "Ta présence a changé ma vie, et tu es capable d'effacer n'importe quelle mauvaise journée en un instant.",
-  "Ta voix, celle qui me manque toujours. J'ai hâte que la nuit vienne chaque soir juste pour l'écouter — la nuit ça m'apaise et m'aide à dormir, et en même temps je ne veux pas dormir, pour ne pas perdre le son de cette belle voix.",
-  "Ta beauté, la plus belle que j'aie jamais vue, celle qui m'attire un peu plus chaque jour — surtout celle qui m'excite de ouf 😂",
-  "Ton intelligence — tu ne sais pas à quel point tu n'es pas comme les gens ordinaires. La manière dont tu analyses et vois les choses à ton jeune âge, ce n'est pas donné à tout le monde. T'es un génie machAllah, même si tu ne veux pas qu'on te le dise.",
-  "Ta façon de croire en moi et de me soutenir, même quand moi j'en doute — babe, je ne l'oublierai jamais.",
+  "Ta voix, celle qui me manque toujours. J'ai hâte que la nuit vienne chaque soir juste pour l'écouter - la nuit ça m'apaise et m'aide à dormir, et en même temps je ne veux pas dormir, pour ne pas perdre le son de cette belle voix.",
+  "Ta beauté, la plus belle que j'aie jamais vue, celle qui m'attire un peu plus chaque jour - surtout celle qui m'excite de ouf 😂",
+  "Ton intelligence - tu ne sais pas à quel point tu n'es pas comme les gens ordinaires. La manière dont tu analyses et vois les choses à ton jeune âge, ce n'est pas donné à tout le monde. T'es un génie machAllah, même si tu ne veux pas qu'on te le dise.",
+  "Ta façon de croire en moi et de me soutenir, même quand moi j'en doute - babe, je ne l'oublierai jamais.",
   "La joie de vivre que tu m'as redonnée, toi qui m'as sorti de ma solitude. Tu m'as appris que life is good, et je le vis maintenant avec toi.",
   "Ton âme, la plus belle chose que Dieu ait mise sur mon chemin.",
-  "You know I love spoiling you with chocolate and sweets, but honestly babe, nothing in this world is as sweet as you are.",
-  "One day I'll marry you, and every romantic movie we've watched together will feel like it was just practice for our own love story."
+  "With you by my side, I want to build a real life - a home, a future, everything good, together.",
+  "One day I'll call you my wife, but honestly babe, every day with you already feels like forever."
 ];
 
 // positions roughly forming a heart shape across the viewport (in %)
@@ -324,7 +324,7 @@ function revealStar(star, text, i){
   if(firstTime){
     clicked++;
     document.getElementById('progressText').textContent = clicked + ' / ' + reasons.length;
-    if(clicked === reasons.length){
+    if(clicked >= reasons.length - 2){
       document.getElementById('toFinalBtn').classList.add('show');
     }
   }
@@ -365,7 +365,7 @@ const finalParagraphs = [
   "Tu as illuminé ce qui était sombre, et ajouté du bonheur là où il me manquait. Tu m'as rendu plus ouvert, même avec ma famille. Tu me donnes de l'espoir, tu crois en moi, et tu es toujours là quand j'ai besoin de toi.",
   "Je n'aurais jamais imaginé avoir à mes côtés une aussi belle âme que toi, et pourtant c'est le cas. Parfois j'ai du mal à y croire, franchement, des fois quand je vois cette beauté et cette âme si belle que tu as, je me dis que Dieu m'a enfin donné quelque chose de bien, et j'en serai toujours reconnaissant.",
   "Tu es la personne avec qui je veux finir ma vie. Celle qui me nourrit mentalement, physiquement, intellectuellement et spirituellement. Je pense qu'on est faits pour être ensemble, et je ferai tout pour que ça se réalise.",
-  "Et si parfois je fais du drama avec toi, babe I'm so sorry — c'est seulement parce que je suis attaché à toi ❤ tu comptes énormément pour moi, et je donnerai même le monde s'il le faut babe.",
+  "Et si parfois je fais du drama avec toi, babe I'm so sorry - c'est seulement parce que je suis attaché à toi ❤ tu comptes énormément pour moi, et je donnerai même le monde s'il le faut babe.",
   "Mamy I love u and you will be my wife one day, i love you.",
   "😂 maintenant go réviser.",
   "À toi, la plus belle des femmes."
