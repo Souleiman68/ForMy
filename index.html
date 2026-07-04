@@ -170,9 +170,13 @@
 
   /* ---------- FINAL MESSAGE ---------- */
   #finalScreen{
-    padding:60px 40px; text-align:center;
+    padding:70px 40px 50px; text-align:center;
     overflow-y:auto;
     -webkit-overflow-scrolling: touch;
+    align-items:center;
+    justify-content:flex-start;
+    height:100%;
+    width:100%;
   }
   .final-name{
     font-family:'Great Vibes', cursive; font-size:48px; color:var(--gold); margin-bottom:20px;
@@ -223,7 +227,7 @@
     .reveal-card{ max-width:82vw; font-size:17px; padding:16px 18px; }
     .final-name{ font-size:38px; }
     .final-text{ font-size:18px; line-height:1.65; }
-    #finalScreen{ padding:40px 22px; }
+    #finalScreen{ padding:60px 22px 40px; }
     .final-sign{ font-size:28px; }
     .final-btn{ padding:14px 34px; font-size:18px; }
   }
@@ -314,17 +318,17 @@ function goTo(id){
 }
 
 /* ---------------- constellation ---------------- */
-const reasons = [
-  "Tes yeux babe, ton sourire - c'est le seul endroit où j'aime toujours me perdre. Te regarder, être à tes côtés, il n'y a rien de mieux, depuis le début je te le jure.",
-  "Ta présence a changé ma vie, et tu es capable d'effacer n'importe quelle mauvaise journée en un instant.",
-  "Ta voix, celle qui me manque toujours. J'ai hâte que la nuit vienne chaque soir juste pour l'écouter - la nuit ça m'apaise et m'aide à dormir, et en même temps je ne veux pas dormir, pour ne pas perdre le son de cette belle voix.",
-  "Ta beauté, la plus belle que j'aie jamais vue, celle qui m'attire un peu plus chaque jour - surtout celle qui m'excite de ouf 😂",
-  "Ton intelligence - tu ne sais pas à quel point tu n'es pas comme les gens ordinaires. La manière dont tu analyses et vois les choses à ton jeune âge, ce n'est pas donné à tout le monde. T'es un génie machAllah, même si tu ne veux pas qu'on te le dise.",
-  "Ta façon de croire en moi et de me soutenir, même quand moi j'en doute - babe, je ne l'oublierai jamais.",
+const reasons = [ 
+  "Tes yeux , ton sourire babe c'est le seul endroit où j'aime toujours me perdre. Te regarder, te voir au pres de moi, tu sais pas a quelle point ça m'apporte la paix.",
+  "Babe Ta présence a changé ma vie, et tu es la seul capable d'effacer n'importe quelle mauvaise thing on me en un instant.",
+  "Ta voix, celle que jaime toujours ecouter. J'ai hâte que la nuit vienne chaque soir juste pour t'écouter parler it make me feel good and sometime it heal all my pain.",
+  "Ta beauté, la plus belle que j'aie jamais connue, celle qui m'attire un peu plus chaque jour - surtout celle qui m'excite de ouf 😂 en plus bizarement",
+  "Ton intelligence aussi is something else tu ne sais pas à quel point tu n'es pas comme les gens ordinaires. La manière dont tu analyses et vois les choses à ton jeune âge, ce n'est pas donné à tout le monde. T'es un génie machAllah, même si tu ne veux pas qu'on te le dise.",
+  "Ta façon de croire en moi et de me soutenir, même quand moi j'en doute babe, je ne l'oublierai jamais. i dont know what u saw on me but im soo grateful to have such a beautiful soul ",
   "La joie de vivre que tu m'as redonnée, toi qui m'as sorti de ma solitude. Tu m'as appris que life is good, et je le vis maintenant avec toi.",
   "Ton âme, la plus belle chose que Dieu ait mise sur mon chemin.",
-  "Every time I look at you, babe, I fall in love all over again - and I don't think that will ever stop.",
-  "I promise you this, Mamy: whatever life brings, I'll always choose you, again and again."
+  "Every time I look at you, babe, I fall in love all over again and I don't think that will ever stop.",
+  "I promise you this Mamy: whatever life brings, I'll always choose you, again and again."
 ];
 
 // positions roughly forming a heart shape across the viewport (in %)
